@@ -1,5 +1,115 @@
-<p>codecheck </p>
 
+<mat-card>
+    <mat-card-title>
+     Füll die folgenden Felder aus um Deine Episode hoch zu laden
+    </mat-card-title>
+    <mat-card-content>
+<mat-stepper  [linear]="false">
+    <mat-step [stepControl]="stepCodeInput">
+         <form [formGroup]="stepCodeInput">
+            
+            <ng-template matStepLabel>🔑 Upload-Code</ng-template>
+            
+            <mat-form-field appearance="fill">
+                <mat-label>Code</mat-label>
+                <input matInput [formControl]="uploadFormControl"  required>
+            </mat-form-field>
+            <div>
+                <button colo mat-button matStepperNext>Weiter</button>
+            </div>
+        </form> 
+    </mat-step>
+    <mat-step>
+        <form [formGroup]="stepParticipants">
+            <ng-template matStepLabel>🎙 Teilnehmende</ng-template>
+
+            <mat-card-subtitle>
+            Gib hier an, wer mit wem gesabbelt und (hoffentlich) lecker gegessen hat. Alle Felder sind optional. Wenn Du etwa keinen Twitter-Handle hast (oder diesen nicht mitteilen möchtest) lass das Feld einfach leer
+            </mat-card-subtitle>
+            <p>Einladender Podcast:</p>
+            <mat-form-field appearance="fill">
+                <mat-label>Podcast</mat-label>
+                <input placeholder="Der Schnuffelcast" matInput [formControl]="uploadFormControl"  >
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Name</mat-label>
+                <input placeholder="Klaus Kleber" matInput [formControl]="uploadFormControl"  >
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Twitter</mat-label>
+                <input placeholder="@klauskleber" matInput [formControl]="uploadFormControl"  >
+            </mat-form-field>
+            <p>Eingeladender Podcast:</p>
+            <mat-form-field appearance="fill">
+                <mat-label>Podcast</mat-label>
+                <input placeholder="Reden über Grau - Der Monochromcast" matInput [formControl]="uploadFormControl"  >
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Name</mat-label>
+                <input placeholder="Gundula Gause" matInput [formControl]="uploadFormControl"  >
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Twitter</mat-label>
+                <input placeholder="@gundula" matInput [formControl]="uploadFormControl"  >
+            </mat-form-field>
+            <mat-card-subtitle>
+                Gib hier einen Titel und eine knappe Zusammenfassung en
+            </mat-card-subtitle>
+            <mat-form-field style="width: 100%;">
+                <mat-label>Titel</mat-label>
+                <input placeholder="Der geilste S(ch)nack ever!" matInput [formControl]="uploadFormControl"  >
+            </mat-form-field>
+            <mat-form-field style="width: 100%;" >
+                <mat-label>Beschreibung</mat-label>
+                <textarea matInput rows="6"  >
+                    
+                </textarea>
+                </mat-form-field>
+
+            <div>
+                <button mat-button matStepperNext>Weiter</button>
+            </div>
+        </form>
+    </mat-step>
+    <mat-step>
+        <ng-template matStepLabel>💾 Datei hochladen</ng-template>
+        OINK
+    </mat-step>
+    <mat-step>
+        <ng-template matStepLabel>☕ Tee trinken :)</ng-template>
+        OINK
+    </mat-step>
+</mat-stepper>
+<!-- <mat-tab-group>
+    <mat-tab label="Code">
+      COde:
+         <form [formGroup]="stepCodeInput">
+            
+            
+            <mat-form-field appearance="fill">
+                <mat-label>Code</mat-label>
+                <input matInput [formControl]="uploadFormControl"  required>
+            </mat-form-field><br/>
+            <mat-form-field appearance="fill">
+                <mat-label>Code</mat-label>
+                <input matInput [formControl]="uploadFormControl"  required>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Code</mat-label>
+                <input matInput [formControl]="uploadFormControl"  required>
+            </mat-form-field>
+            <div>
+                <button  mat-button >Weiter</button>
+            </div>
+        </form> 
+
+    </mat-tab>
+    <mat-tab label="Teilnehmende"></mat-tab>
+    <mat-tab label="Upload"></mat-tab>
+</mat-tab-group> -->
+
+</mat-card-content>
+</mat-card>
 <p >Cupcake Ipsum - Sugar-coated Lorem Ipsum Generator
     Tired of how boring Lorem Ipsum got?
     
