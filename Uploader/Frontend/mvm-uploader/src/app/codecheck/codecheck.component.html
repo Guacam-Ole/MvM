@@ -1,137 +1,147 @@
-
 <mat-card>
+    <form [formGroup]="uploaderGroup">
     <mat-card-title>
-     Füll die folgenden Felder aus um Deine Episode hoch zu laden
+        Füll die folgenden Felder aus um Deine Episode hoch zu laden
     </mat-card-title>
     <mat-card-content>
-<mat-stepper  [linear]="false">
-    <mat-step [stepControl]="stepCodeInput">
-         <form [formGroup]="stepCodeInput">
-            
-            <ng-template matStepLabel>🔑 Upload-Code</ng-template>
-            
-            <mat-form-field appearance="fill">
-                <mat-label>Code</mat-label>
-                <input matInput [formControl]="uploadFormControl"  required>
-            </mat-form-field>
-            <div>
-                <button colo mat-button matStepperNext>Weiter</button>
-            </div>
-        </form> 
-    </mat-step>
-    <mat-step>
-        <form [formGroup]="stepParticipants">
-            <ng-template matStepLabel>🎙 Teilnehmende</ng-template>
+        <mat-horizontal-stepper linear #stepper >
+            <mat-step >
+                    <ng-template matStepLabel>🤝 Willkommen</ng-template>
 
-            <mat-card-subtitle>
-            Gib hier an, wer mit wem gesabbelt und (hoffentlich) lecker gegessen hat. Alle Felder sind optional. Wenn Du etwa keinen Twitter-Handle hast (oder diesen nicht mitteilen möchtest) lass das Feld einfach leer
-            </mat-card-subtitle>
-            <p>Einladender Podcast:</p>
-            <mat-form-field appearance="fill">
-                <mat-label>Podcast</mat-label>
-                <input placeholder="Der Schnuffelcast" matInput [formControl]="uploadFormControl"  >
-            </mat-form-field>
-            <mat-form-field appearance="fill">
-                <mat-label>Name</mat-label>
-                <input placeholder="Klaus Kleber" matInput [formControl]="uploadFormControl"  >
-            </mat-form-field>
-            <mat-form-field appearance="fill">
-                <mat-label>Twitter</mat-label>
-                <input placeholder="@klauskleber" matInput [formControl]="uploadFormControl"  >
-            </mat-form-field>
-            <p>Eingeladender Podcast:</p>
-            <mat-form-field appearance="fill">
-                <mat-label>Podcast</mat-label>
-                <input placeholder="Reden über Grau - Der Monochromcast" matInput [formControl]="uploadFormControl"  >
-            </mat-form-field>
-            <mat-form-field appearance="fill">
-                <mat-label>Name</mat-label>
-                <input placeholder="Gundula Gause" matInput [formControl]="uploadFormControl"  >
-            </mat-form-field>
-            <mat-form-field appearance="fill">
-                <mat-label>Twitter</mat-label>
-                <input placeholder="@gundula" matInput [formControl]="uploadFormControl"  >
-            </mat-form-field>
-            <mat-card-subtitle>
-                Gib hier einen Titel und eine knappe Zusammenfassung en
-            </mat-card-subtitle>
-            <mat-form-field style="width: 100%;">
-                <mat-label>Titel</mat-label>
-                <input placeholder="Der geilste S(ch)nack ever!" matInput [formControl]="uploadFormControl"  >
-            </mat-form-field>
-            <mat-form-field style="width: 100%;" >
-                <mat-label>Beschreibung</mat-label>
-                <textarea matInput rows="6"  >
-                    
+                    <mat-form-field appearance="fill">
+                        <mat-label>Code</mat-label>
+                        <input matInput #codeInput formControlName="code" required>
+                        <mat-error *ngIf="codeError!=null">
+                            Sorry. Falscher Code.
+                        </mat-error>
+                    </mat-form-field>
+                   
+                    <div>
+                        <button mat-raised-button [disabled]="uploaderGroup.invalid" (click)="validateCode()" mat-button matStepperNext>Weiter</button>
+                    </div>
+            </mat-step>
+            <mat-step >
+                    <ng-template matStepLabel>🎙 Teilnehmende</ng-template>
+
+                    <mat-card-subtitle>
+                        Gib hier an, wer mit wem gesabbelt und (hoffentlich) lecker gegessen hat. Alle Felder sind
+                        optional. Wenn Du etwa keinen Twitter-Handle hast (oder diesen nicht mitteilen möchtest) lass
+                        das Feld einfach leer
+                    </mat-card-subtitle>
+                    <p>Teilnehmende: </p>
+                    <div formArrayName="participants">
+                        <div *ngFor="let participant of participants().controls; let i=index" [formGroupName]="i">
+                            <mat-form-field appearance="fill">
+                                <mat-label>Podcast</mat-label>
+                                <input placeholder="Der Schnuffelcast" matInput formControlName="podcast">
+                            </mat-form-field>
+                            <mat-form-field appearance="fill">
+                                <mat-label>Name</mat-label>
+                                <input placeholder="Klaus Kleber" matInput formControlName="name">
+                            </mat-form-field>
+                            <mat-form-field appearance="fill">
+                                <mat-label>Twitter</mat-label>
+                                <input placeholder="@klauskleber" matInput formControlName="twitter">
+                            </mat-form-field>
+                       
+                            <button *ngIf="i>1" (click)="removeParticipant(i)" aria-label="Eintrag entfernen" mat-mini-fab color="warn" style="margin-left: 10px; "   ><mat-icon>person_remove</mat-icon></button>
+                        </div>
+                        <button (click)="addParticipant()" color="secondary" mat-fab aria-label="Eintrag hinzufügen" ><mat-icon>person_add</mat-icon></button>
+                        
+                    </div>
+
+                  
+                    <mat-card-subtitle>
+                        Gib hier einen Titel und eine knappe Zusammenfassung en
+                    </mat-card-subtitle>
+                    <mat-form-field style="width: 100%;">
+                        <mat-label>Titel</mat-label>
+                        <input placeholder="Der geilste S(ch)nack ever!" matInput [formControl]="uploadFormControl">
+                    </mat-form-field>
+                    <mat-form-field style="width: 100%;">
+                        <mat-label>Beschreibung</mat-label>
+                        <textarea matInput rows="6">
+
                 </textarea>
-                </mat-form-field>
+                    </mat-form-field>
 
-            <div>
-                <button mat-button matStepperNext>Weiter</button>
-            </div>
-        </form>
-    </mat-step>
-    <mat-step>
-        <ng-template matStepLabel>💾 Datei hochladen</ng-template>
-        OINK
-    </mat-step>
-    <mat-step>
-        <ng-template matStepLabel>☕ Tee trinken :)</ng-template>
-        OINK
-    </mat-step>
-</mat-stepper>
-<!-- <mat-tab-group>
-    <mat-tab label="Code">
-      COde:
-         <form [formGroup]="stepCodeInput">
-            
-            
-            <mat-form-field appearance="fill">
-                <mat-label>Code</mat-label>
-                <input matInput [formControl]="uploadFormControl"  required>
-            </mat-form-field><br/>
-            <mat-form-field appearance="fill">
-                <mat-label>Code</mat-label>
-                <input matInput [formControl]="uploadFormControl"  required>
-            </mat-form-field>
-            <mat-form-field appearance="fill">
-                <mat-label>Code</mat-label>
-                <input matInput [formControl]="uploadFormControl"  required>
-            </mat-form-field>
-            <div>
-                <button  mat-button >Weiter</button>
-            </div>
-        </form> 
+                    <div>
+                        <button mat-button matStepperNext>Weiter</button>
+                    </div>
+            </mat-step>
+            <mat-step>
+                <ng-template matStepLabel>💾 Datei hochladen</ng-template>
+                OINK
+            </mat-step>
+            <mat-step>
+                <ng-template matStepLabel>☕ Tee trinken :)</ng-template>
+                OINK
+            </mat-step>
+        </mat-horizontal-stepper>
 
-    </mat-tab>
-    <mat-tab label="Teilnehmende"></mat-tab>
-    <mat-tab label="Upload"></mat-tab>
-</mat-tab-group> -->
 
-</mat-card-content>
+    </mat-card-content>
+</form>
 </mat-card>
-<p >Cupcake Ipsum - Sugar-coated Lorem Ipsum Generator
+<p>Cupcake Ipsum - Sugar-coated Lorem Ipsum Generator
     Tired of how boring Lorem Ipsum got?
-    
+
     How about using auto-generated text that will actually
     make people love your project even more?
-    
+
     Pretty sweet, right?
     Paragraphs
     LONGMEDIUMSHORT
     Start with
     "Cupcake ipsum dolor sit amet"
     Give your text some "love"
-    
-    Jelly liquorice macaroon pie cake gummi bears powder lollipop tart. Marshmallow toffee cookie muffin carrot cake pudding jujubes. Danish cotton candy cupcake ice cream gingerbread. Donut bear claw muffin gummies ice cream. Tart cotton candy icing topping oat cake pie icing. Lemon drops gummi bears marzipan dragée pudding jelly beans gummi bears soufflé sugar plum. Carrot cake fruitcake chocolate bar chupa chups bonbon chocolate wafer cake bear claw. Macaroon soufflé chocolate dessert sesame snaps lollipop jelly sweet soufflé. Cheesecake sugar plum gummies toffee oat cake donut. Cotton candy brownie gingerbread croissant wafer carrot cake biscuit toffee. Croissant powder ice cream biscuit toffee toffee biscuit toffee. Macaroon bonbon cupcake oat cake gingerbread dessert powder marshmallow. Liquorice pudding fruitcake gingerbread chocolate. Ice cream halvah chocolate cake carrot cake tootsie roll bear claw.
-    
-    Fruitcake brownie pastry toffee pudding wafer croissant. Oat cake carrot cake danish marzipan tiramisu. Jujubes dessert gingerbread bonbon icing croissant sweet roll. Muffin halvah macaroon sugar plum gummi bears pudding cotton candy pudding. Wafer brownie candy canes candy macaroon. Pastry sugar plum cookie chocolate gingerbread wafer. Lollipop cheesecake jelly toffee brownie cheesecake. Icing powder apple pie oat cake jelly beans cake cookie chocolate cake sugar plum. Tart cheesecake apple pie gingerbread cheesecake oat cake lemon drops jelly beans. Candy shortbread bonbon muffin marshmallow dessert cupcake wafer carrot cake. Candy canes tootsie roll cake jujubes ice cream. Cake jelly beans pie ice cream cake sesame snaps chocolate cake. Pudding icing tiramisu tiramisu pie. Caramels lollipop chocolate bar gummies biscuit chocolate carrot cake gummi bears.
-    
-    Pie tootsie roll wafer lollipop caramels powder. Sweet pie oat cake cake dragée muffin. Sweet roll jelly beans jelly cookie sugar plum pie tootsie roll wafer tiramisu. Biscuit apple pie jujubes halvah fruitcake gingerbread dessert powder shortbread. Toffee carrot cake icing chocolate biscuit sesame snaps gingerbread shortbread pudding. Jelly-o cake sweet roll donut candy lemon drops halvah gingerbread. Candy fruitcake chocolate cake soufflé muffin cookie gummies pudding. Bonbon jelly-o cake apple pie jelly beans marzipan fruitcake. Jelly beans cake chocolate tootsie roll macaroon toffee. Pie pudding danish gingerbread caramels cheesecake. Tiramisu brownie powder fruitcake pie cupcake tiramisu. Shortbread icing oat cake croissant caramels jujubes. Sweet muffin cotton candy danish cheesecake fruitcake. Apple pie apple pie powder sweet wafer bear claw marzipan jujubes dessert.
-    
-    Brownie tiramisu icing jelly beans jelly beans dessert gummi bears cake muffin. Toffee chupa chups ice cream gummi bears liquorice pie jelly sesame snaps jelly. Cotton candy jelly-o cupcake soufflé marshmallow brownie caramels. Jelly macaroon sweet roll sesame snaps caramels. Gummies jelly-o cake tart cupcake pudding. Jujubes sugar plum cupcake gingerbread jelly beans icing. Cheesecake candy marzipan dragée jelly-o. Lollipop bonbon apple pie sweet bear claw marzipan biscuit dragée. Pastry candy canes candy fruitcake donut brownie macaroon. Cake candy canes donut powder liquorice liquorice sweet roll gummies. Soufflé cake cake marzipan tootsie roll lollipop. Gummies sesame snaps marshmallow jujubes cupcake soufflé bear claw croissant. Sesame snaps cookie pastry pudding apple pie lemon drops candy fruitcake.
-    
-    Biscuit sweet sesame snaps fruitcake jujubes wafer donut. Cupcake gummies tiramisu chocolate cake marshmallow macaroon donut cake chupa chups. Tootsie roll halvah toffee tootsie roll dragée cotton candy. Liquorice cookie marshmallow powder cake icing. Donut jelly beans chocolate cake chocolate candy canes wafer halvah pie. Chocolate cake chocolate cake bonbon ice cream croissant gummies. Sweet roll marshmallow powder toffee chupa chups toffee dragée gingerbread. Sweet lollipop sesame snaps cotton candy marshmallow gummies gummi bears muffin jelly-o. Topping tart icing biscuit shortbread. Lollipop brownie tart jelly jelly brownie croissant sweet candy canes. Dessert dragée liquorice sweet roll sesame snaps lemon drops chupa chups halvah. Gummi bears sweet macaroon marzipan cotton candy dragée pudding.
-    happy muffin image sweets light-brown-muffin sweet-cherry green-muffin light-pink-muffin blue-muffin pink-pie cherry pink-muffin raspberry
+
+    Jelly liquorice macaroon pie cake gummi bears powder lollipop tart. Marshmallow toffee cookie muffin carrot cake
+    pudding jujubes. Danish cotton candy cupcake ice cream gingerbread. Donut bear claw muffin gummies ice cream. Tart
+    cotton candy icing topping oat cake pie icing. Lemon drops gummi bears marzipan dragée pudding jelly beans gummi
+    bears soufflé sugar plum. Carrot cake fruitcake chocolate bar chupa chups bonbon chocolate wafer cake bear claw.
+    Macaroon soufflé chocolate dessert sesame snaps lollipop jelly sweet soufflé. Cheesecake sugar plum gummies toffee
+    oat cake donut. Cotton candy brownie gingerbread croissant wafer carrot cake biscuit toffee. Croissant powder ice
+    cream biscuit toffee toffee biscuit toffee. Macaroon bonbon cupcake oat cake gingerbread dessert powder marshmallow.
+    Liquorice pudding fruitcake gingerbread chocolate. Ice cream halvah chocolate cake carrot cake tootsie roll bear
+    claw.
+
+    Fruitcake brownie pastry toffee pudding wafer croissant. Oat cake carrot cake danish marzipan tiramisu. Jujubes
+    dessert gingerbread bonbon icing croissant sweet roll. Muffin halvah macaroon sugar plum gummi bears pudding cotton
+    candy pudding. Wafer brownie candy canes candy macaroon. Pastry sugar plum cookie chocolate gingerbread wafer.
+    Lollipop cheesecake jelly toffee brownie cheesecake. Icing powder apple pie oat cake jelly beans cake cookie
+    chocolate cake sugar plum. Tart cheesecake apple pie gingerbread cheesecake oat cake lemon drops jelly beans. Candy
+    shortbread bonbon muffin marshmallow dessert cupcake wafer carrot cake. Candy canes tootsie roll cake jujubes ice
+    cream. Cake jelly beans pie ice cream cake sesame snaps chocolate cake. Pudding icing tiramisu tiramisu pie.
+    Caramels lollipop chocolate bar gummies biscuit chocolate carrot cake gummi bears.
+
+    Pie tootsie roll wafer lollipop caramels powder. Sweet pie oat cake cake dragée muffin. Sweet roll jelly beans jelly
+    cookie sugar plum pie tootsie roll wafer tiramisu. Biscuit apple pie jujubes halvah fruitcake gingerbread dessert
+    powder shortbread. Toffee carrot cake icing chocolate biscuit sesame snaps gingerbread shortbread pudding. Jelly-o
+    cake sweet roll donut candy lemon drops halvah gingerbread. Candy fruitcake chocolate cake soufflé muffin cookie
+    gummies pudding. Bonbon jelly-o cake apple pie jelly beans marzipan fruitcake. Jelly beans cake chocolate tootsie
+    roll macaroon toffee. Pie pudding danish gingerbread caramels cheesecake. Tiramisu brownie powder fruitcake pie
+    cupcake tiramisu. Shortbread icing oat cake croissant caramels jujubes. Sweet muffin cotton candy danish cheesecake
+    fruitcake. Apple pie apple pie powder sweet wafer bear claw marzipan jujubes dessert.
+
+    Brownie tiramisu icing jelly beans jelly beans dessert gummi bears cake muffin. Toffee chupa chups ice cream gummi
+    bears liquorice pie jelly sesame snaps jelly. Cotton candy jelly-o cupcake soufflé marshmallow brownie caramels.
+    Jelly macaroon sweet roll sesame snaps caramels. Gummies jelly-o cake tart cupcake pudding. Jujubes sugar plum
+    cupcake gingerbread jelly beans icing. Cheesecake candy marzipan dragée jelly-o. Lollipop bonbon apple pie sweet
+    bear claw marzipan biscuit dragée. Pastry candy canes candy fruitcake donut brownie macaroon. Cake candy canes donut
+    powder liquorice liquorice sweet roll gummies. Soufflé cake cake marzipan tootsie roll lollipop. Gummies sesame
+    snaps marshmallow jujubes cupcake soufflé bear claw croissant. Sesame snaps cookie pastry pudding apple pie lemon
+    drops candy fruitcake.
+
+    Biscuit sweet sesame snaps fruitcake jujubes wafer donut. Cupcake gummies tiramisu chocolate cake marshmallow
+    macaroon donut cake chupa chups. Tootsie roll halvah toffee tootsie roll dragée cotton candy. Liquorice cookie
+    marshmallow powder cake icing. Donut jelly beans chocolate cake chocolate candy canes wafer halvah pie. Chocolate
+    cake chocolate cake bonbon ice cream croissant gummies. Sweet roll marshmallow powder toffee chupa chups toffee
+    dragée gingerbread. Sweet lollipop sesame snaps cotton candy marshmallow gummies gummi bears muffin jelly-o. Topping
+    tart icing biscuit shortbread. Lollipop brownie tart jelly jelly brownie croissant sweet candy canes. Dessert dragée
+    liquorice sweet roll sesame snaps lemon drops chupa chups halvah. Gummi bears sweet macaroon marzipan cotton candy
+    dragée pudding.
+    happy muffin image sweets light-brown-muffin sweet-cherry green-muffin light-pink-muffin blue-muffin pink-pie cherry
+    pink-muffin raspberry
     Supported by Basia Madej
     donut white-muffin</p>

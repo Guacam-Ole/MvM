@@ -14,6 +14,7 @@ import { MatInputModule} from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCard, MatCardModule} from '@angular/material/card';
 import { MatTab, MatTabsModule } from '@angular/material/tabs';
+import{ MatIconModule }  from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,9 @@ import { MatTab, MatTabsModule } from '@angular/material/tabs';
     MatInputModule,
     MatButtonModule,
     MatCardModule,
-    MatTabsModule
+    MatTabsModule,
+    MatIconModule
+
 
   
   ],
