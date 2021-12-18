@@ -5,27 +5,30 @@ import { FormArray, FormBuilder, FormControl, FormGroup,  Validators } from '@an
 import { MatStepper } from '@angular/material/stepper';
 
 @Component({
-  selector: 'app-codecheck',
-  templateUrl: './codecheck.component.html',
-  styleUrls: ['./codecheck.component.css']
+  selector: 'app-uploader',
+  templateUrl: './uploader.component.html',
+  styleUrls: ['./uploader.component.css']
 })
 
-export class CodecheckComponent implements OnInit, AfterViewInit {
-  
+export class UploaderComponent implements OnInit, AfterViewInit {
   isLinear=true;
   uploaderGroup:FormGroup;
   uploadFormControl=new FormControl('',[]);
-  codeError:string | null;
+  codeIsValid:boolean=false;
+  codeChecked:boolean=false;
+  readyToUpload:boolean=false;
 
   constructor(private _formbuilder:FormBuilder) { 
     this.uploaderGroup=this._formbuilder.group( {
       name:'',
       code: '',
-      participants:this._formbuilder.array([])
-    });
-    this.codeError=null;
-  }
+      podcasttitle:'jjj',
+      desciption:'dfk',
+      uploadfile:null,
+      participants:this._formbuilder.array([]),
 
+    });
+  }
 
   participants():FormArray {
     return this.uploaderGroup.get("participants") as FormArray;
@@ -64,27 +67,28 @@ export class CodecheckComponent implements OnInit, AfterViewInit {
     this.fillDemoData();
   }
 
+  startUpload() {
+    console.log("jjjjj");
+    var file=this.uploaderGroup.get("uploadfile");
+    console.log(file);
+  }
+
   validateCode() {
     var codeField=this.uploaderGroup.get("code");
     var code=codeField?.value;
     console.log("code="+code);
 
     // TODO: Api-Call (obviously)
-    var codeIsValid=code=="dbddhkp";
-
-this.codeError="Bissu blöde?";
-
-    if (codeIsValid) {
-      codeField?.clearValidators();
-      codeField?.markAsPristine();
-    } else {
-      codeField?.setValidators(Validators.required);
-      codeField?.setErrors({required:true })
-      codeField?.markAsDirty();
-    }
+    this.codeIsValid=code=="dbddhkp";
+    if (!this.codeIsValid) codeField?.setErrors({"codevalid":"false"});
+    this.codeChecked=true;
+  
     
     return code=="dbddhkp";
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+
+
+   }
 }

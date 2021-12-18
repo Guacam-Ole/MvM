@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CodecheckComponent } from './codecheck.component';
+import { UploaderComponent } from './uploader.component';
 
-describe('CodecheckComponent', () => {
-  let component: CodecheckComponent;
-  let fixture: ComponentFixture<CodecheckComponent>;
+describe('UploaderComponent', () => {
+  let component: UploaderComponent;
+  let fixture: ComponentFixture<UploaderComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CodecheckComponent ]
+      declarations: [ UploaderComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CodecheckComponent);
+    fixture = TestBed.createComponent(UploaderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

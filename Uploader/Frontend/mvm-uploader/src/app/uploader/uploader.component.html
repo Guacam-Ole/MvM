@@ -1,0 +1,111 @@
+<mat-card>
+    <form [formGroup]="uploaderGroup">
+        <mat-card-title>
+            Füll die folgenden Felder aus um Deine Episode hoch zu laden
+        </mat-card-title>
+        <mat-card-content>
+            <mat-horizontal-stepper linear #stepper>
+                <mat-step>
+                    <ng-template matStepLabel>🤝 Willkommen</ng-template>
+
+                    <mat-form-field appearance="fill">
+                        <mat-label>Code</mat-label>
+                        <input matInput #codeInput formControlName="code" required>
+                        <mat-error *ngIf="!codeIsValid && codeChecked">
+                            Sorry. Falscher Code.
+                        </mat-error>
+                    </mat-form-field>
+
+                    <div>
+                        <button *ngIf="!codeChecked || !codeIsValid" mat-raised-button [hidden]="codeIsValid"
+                            [disabled]="uploaderGroup.invalid" (click)="validateCode()" mat-button>Code
+                            überprüfen</button>
+                        <button *ngIf="uploaderGroup.valid && codeIsValid && codeChecked" mat-raised-button
+                            [hidden]="uploaderGroup.invalid" [disabled]="uploaderGroup.invalid" (click)="validateCode()"
+                            mat-button matStepperNext>Weiter</button>
+                    </div>
+                </mat-step>
+                <mat-step>
+                    <ng-template matStepLabel>🎙 Inhalt</ng-template>
+
+                    <mat-card-subtitle>
+                        Gib hier an, wer mit wem gesabbelt und (hoffentlich) lecker gegessen hat. Alle Felder sind
+                        optional. Wenn Du etwa keinen Twitter-Handle hast (oder diesen nicht mitteilen möchtest) lass
+                        das Feld einfach leer
+                    </mat-card-subtitle>
+                    <p>Teilnehmende: </p>
+                    <mat-card-content>
+                        <div formArrayName="participants">
+                            <div *ngFor="let participant of participants().controls; let i=index" [formGroupName]="i">
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Podcast</mat-label>
+                                    <input placeholder="Der Schnuffelcast" matInput formControlName="podcast">
+                                </mat-form-field>
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Name</mat-label>
+                                    <input placeholder="Klaus Kleber" matInput formControlName="name">
+                                </mat-form-field>
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Twitter</mat-label>
+                                    <input placeholder="@klauskleber" matInput formControlName="twitter">
+                                </mat-form-field>
+
+                                <button *ngIf="i>1" (click)="removeParticipant(i)" aria-label="Eintrag entfernen"
+                                    mat-mini-fab color="warn" style="margin-left: 10px; ">
+                                    <mat-icon>person_remove</mat-icon>
+                                </button>
+                            </div>
+                            <button (click)="addParticipant()" color="secondary" mat-fab
+                                aria-label="Eintrag hinzufügen">
+                                <mat-icon>person_add</mat-icon>
+                            </button>
+                        </div>
+                    </mat-card-content>
+                    <mat-divider></mat-divider>
+                    <mat-card-content>
+                        <div>
+                            <mat-card-subtitle>
+                                Gib hier einen Titel und eine knappe Zusammenfassung ein
+                            </mat-card-subtitle>
+                            <mat-form-field style="width: 100%;">
+                                <mat-label>Titel</mat-label>
+                                <input placeholder="Der geilste S(ch)nack ever!" matInput formControlName="podcasttitle"
+                                    [required]=true>
+                            </mat-form-field>
+                            <mat-form-field style="width: 100%;">
+                                <mat-label>Beschreibung</mat-label>
+                                <textarea matInput rows="6" required></textarea>
+                            </mat-form-field>
+                        </div>
+                    </mat-card-content>
+                    <div>
+                        <button  mat-button matStepperNext
+                            [disabled]="uploaderGroup.invalid">Weiter</button>
+                    </div>
+                </mat-step>
+                <mat-step>
+                    <ng-template matStepLabel>💾 Datei hochladen</ng-template>
+                    <div *ngIf="uploaderGroup.invalid">Auf einen der vorherigen Seiten fehlt noch was. Korrigier das
+                        bitte und komm hierher zurück</div>
+                    <div *ngIf="uploaderGroup.valid">
+                        <div>
+                            <mat-label>Mp3-Datei hochladen:</mat-label><br/>
+                            <input type="file" accept=".mp3" [required]=true #uploadedFile >
+                        </div>
+                        <br/>
+                        <button mat-button color="warn" mat-raised-button (click)="startUpload()"  [disabled]="uploaderGroup.invalid">Upload starten</button>
+                        <div>
+                            
+                        </div>
+                    </div>
+                </mat-step>
+                <mat-step>
+                    <ng-template matStepLabel>☕ Tee trinken :)</ng-template>
+                    OINK
+                </mat-step>
+            </mat-horizontal-stepper>
+
+
+        </mat-card-content>
+    </form>
+</mat-card>

@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CodecheckComponent } from './codecheck/codecheck.component';
+import { UploaderComponent } from './uploader/uploader.component';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -15,11 +15,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCard, MatCardModule} from '@angular/material/card';
 import { MatTab, MatTabsModule } from '@angular/material/tabs';
 import{ MatIconModule }  from '@angular/material/icon';
+import {MatDividerModule } from '@angular/material/divider';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CodecheckComponent,
+    UploaderComponent,
     HeaderComponent,
     FooterComponent
   ],
@@ -34,7 +35,8 @@ import{ MatIconModule }  from '@angular/material/icon';
     MatButtonModule,
     MatCardModule,
     MatTabsModule,
-    MatIconModule
+    MatIconModule,
+    MatDividerModule
 
 
   
