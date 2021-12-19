@@ -190,15 +190,6 @@ def main():
 	while input_incorrect:
 		rotation = 90
         print ("rotation set to 90")
-        # input("    Input the rotation of the screen (0, 90, 180, 270, 360 or leave empty for default setting 270): ")
-		# if rotation == "":
-			# input_incorrect = False
-			# rotation = 270
-		# elif rotation in ['0', '90', '180', '270']:
-			# input_incorrect = False
-			# rotation = int(rotation)
-		# else:
-			# print("    Input Error, rotation value must be 0, 90, 180 or 270. Try again or Ctrl + C to Exit.")
 
 	line = 'dtoverlay=pitft28-resistive, rotate=%d, speed=48000000, fps=30' % rotation
 	edit_line_file('/boot/config.txt', 'dtoverlay=pitft28-resistive', line)
@@ -221,10 +212,6 @@ def main():
 	file.close()
 
 	time.sleep(3)
-	# 4
-#	print("\n\nSet auto start X GUI")
-#	time.sleep(2)
-#	edit_line_file("/boot/config.txt", "start_x=", "start_x=1")
 
 
 	print("====================")
