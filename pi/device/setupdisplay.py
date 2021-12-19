@@ -189,7 +189,7 @@ def main():
 	input_incorrect = True
 	while input_incorrect:
 		rotation = 90
-        print ("rotation set to 90")
+		print ("rotation set to 90")
 
 	line = 'dtoverlay=pitft28-resistive, rotate=%d, speed=48000000, fps=30' % rotation
 	edit_line_file('/boot/config.txt', 'dtoverlay=pitft28-resistive', line)
