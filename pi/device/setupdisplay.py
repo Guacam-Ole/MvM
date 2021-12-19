@@ -186,10 +186,8 @@ def main():
 
 	print("\n\nSet up screen:")
 	time.sleep(2)
-	input_incorrect = True
-	while input_incorrect:
-		rotation = 90
-		print ("rotation set to 90")
+	rotation = 90
+	print ("rotation set to 90")
 
 	line = 'dtoverlay=pitft28-resistive, rotate=%d, speed=48000000, fps=30' % rotation
 	edit_line_file('/boot/config.txt', 'dtoverlay=pitft28-resistive', line)
@@ -223,6 +221,8 @@ def main():
 	print("\nReboot for changes to take effect")
 	time.sleep(2)
 	#os.system("sudo reboot")
+	#Disable X11:
+	sudo systemctl set-default multi-user.target
 
 if __name__ == '__main__':
 	try:
