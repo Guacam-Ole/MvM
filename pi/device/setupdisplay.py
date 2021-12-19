@@ -222,7 +222,7 @@ def main():
 	time.sleep(2)
 	#os.system("sudo reboot")
 	#Disable X11:
-	sudo systemctl set-default multi-user.target
+	systemctl set-default multi-user.target
 
 if __name__ == '__main__':
 	try:
