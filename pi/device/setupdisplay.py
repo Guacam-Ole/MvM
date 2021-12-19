@@ -220,9 +220,9 @@ def main():
 	print("")
 	print("====================")
 	time.sleep(1)
-	print("\nReboot..")
+	print("\nReboot for changes to take effect")
 	time.sleep(2)
-	os.system("sudo reboot")
+	#os.system("sudo reboot")
 
 if __name__ == '__main__':
 	try:
