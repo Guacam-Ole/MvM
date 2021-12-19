@@ -162,7 +162,7 @@ def main():
 	print("                SunFounder")
 	print("")
 	print("                    support@sunfounder.com")
-    print(" (modified for MvM-Box by Ole")
+	print(" (modified for MvM-Box by Ole")
 	print("===========================================")
 
 	print("Setting up for PiTFT...")
