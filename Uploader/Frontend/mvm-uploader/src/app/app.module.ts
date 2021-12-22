@@ -16,6 +16,7 @@ import { MatCard, MatCardModule} from '@angular/material/card';
 import { MatTab, MatTabsModule } from '@angular/material/tabs';
 import{ MatIconModule }  from '@angular/material/icon';
 import {MatDividerModule } from '@angular/material/divider';
+import {HttpClientModule } from '@angular/common/http' ;
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import {MatDividerModule } from '@angular/material/divider';
     MatCardModule,
     MatTabsModule,
     MatIconModule,
-    MatDividerModule
+    MatDividerModule,
+    HttpClientModule
 
 
   

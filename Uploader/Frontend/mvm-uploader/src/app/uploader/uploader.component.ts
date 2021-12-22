@@ -3,12 +3,17 @@ import { ThrowStmt } from '@angular/compiler';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup,  Validators } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+
+const url:String="http://localhost:29438";  // TODO: Config
 
 @Component({
   selector: 'app-uploader',
   templateUrl: './uploader.component.html',
   styleUrls: ['./uploader.component.css']
 })
+
+
 
 export class UploaderComponent implements OnInit, AfterViewInit {
   isLinear=true;
@@ -17,8 +22,12 @@ export class UploaderComponent implements OnInit, AfterViewInit {
   codeIsValid:boolean=false;
   codeChecked:boolean=false;
   readyToUpload:boolean=false;
+  httpHeaders = new HttpHeaders({
+    'Content-Type' : 'application/json',
+    'Cache-Control': 'no-cache'
+  });
 
-  constructor(private _formbuilder:FormBuilder) { 
+  constructor(private _formbuilder:FormBuilder, private _http:HttpClient) { 
     this.uploaderGroup=this._formbuilder.group( {
       name:'',
       code: '',
@@ -78,13 +87,14 @@ export class UploaderComponent implements OnInit, AfterViewInit {
     var code=codeField?.value;
     console.log("code="+code);
 
-    // TODO: Api-Call (obviously)
-    this.codeIsValid=code=="dbddhkp";
-    if (!this.codeIsValid) codeField?.setErrors({"codevalid":"false"});
-    this.codeChecked=true;
+
   
-    
-    return code=="dbddhkp";
+  
+    this._http.post<boolean>(url+'/upload/codeisvalid',  { 'code': code} , { headers:this.httpHeaders}).subscribe(data => {
+      this.codeIsValid=data;
+      if (!this.codeIsValid) codeField?.setErrors({"codevalid":"false"});
+      this.codeChecked=true;
+    });
   }
 
   ngOnInit() {
