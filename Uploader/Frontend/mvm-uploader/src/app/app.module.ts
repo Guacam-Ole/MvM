@@ -17,7 +17,7 @@ import { MatTab, MatTabsModule } from '@angular/material/tabs';
 import{ MatIconModule }  from '@angular/material/icon';
 import {MatDividerModule } from '@angular/material/divider';
 import {HttpClientModule } from '@angular/common/http' ;
-import { MatFileUploadModule } from 'angular-material-fileupload';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -40,7 +40,7 @@ import { MatFileUploadModule } from 'angular-material-fileupload';
     MatIconModule,
     MatDividerModule,
     HttpClientModule,
-    MatFileUploadModule
+    MatProgressSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
