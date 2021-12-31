@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace mvmuploader
+namespace MvM.Uploader.Backend.Web
 {
     public class Program
     {

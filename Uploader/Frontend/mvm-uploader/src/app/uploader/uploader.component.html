@@ -79,7 +79,7 @@
                         </div>
                     </mat-card-content>
                     <div>
-                        <button  mat-button matStepperNext
+                        <button  mat-button matStepperNext (click)="initEpisode()"
                             [disabled]="uploaderGroup.invalid">Weiter</button>
                     </div>
                 </mat-step>
@@ -90,10 +90,20 @@
                     <div *ngIf="uploaderGroup.valid">
                         <div>
                             <mat-label>Mp3-Datei hochladen:</mat-label><br/>
-                            <input type="file" accept=".mp3" [required]=true #uploadedFile >
+                            <input type="file" accept=".mp3" [required]=true #uploadFile  (change)="fileselected(uploadFile)"  >
                         </div>
                         <br/>
-                        <button mat-button color="warn" mat-raised-button (click)="startUpload()"  [disabled]="uploaderGroup.invalid">Upload starten</button>
+                        <!-- <mat-file-upload-queue #uploadEpisodeQueue 
+                            [fileAlias]="'file'"               
+                            [httpUrl]="getBaseUrl()+'/episode/start'"
+                        
+
+                            
+                            >
+
+                            <mat-file-upload [file]="file" [id]="i" *ngFor="let file of uploadEpisodeQueue.files; let i = index"  (onUpload)="up(file)" ></mat-file-upload>
+                        </mat-file-upload-queue> -->
+                        <button mat-button color="warn" #upButton mat-raised-button (click)="up()"  [disabled]="uploaderGroup.invalid">Upload starten</button> 
                         <div>
                             
                         </div>
