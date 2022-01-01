@@ -1,4 +1,4 @@
-﻿namespace mvmuploader.Models
+﻿namespace MvM.Uploader.Backend.Web.Models
 {
     public class ParticipantModel
     {

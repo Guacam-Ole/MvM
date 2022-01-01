@@ -5,8 +5,8 @@
         </mat-card-title>
         <mat-card-content>
             <mat-horizontal-stepper linear #stepper>
-                <mat-step>
-                    <ng-template matStepLabel>🤝 Willkommen</ng-template>
+                <mat-step [editable]="stepperConfig.code">
+                    <ng-template matStepLabel>🤗 Willkommen</ng-template>
 
                     <mat-form-field appearance="fill">
                         <mat-label>Code</mat-label>
@@ -18,15 +18,12 @@
 
                     <div>
                         <button *ngIf="!codeChecked || !codeIsValid" mat-raised-button [hidden]="codeIsValid"
-                            [disabled]="uploaderGroup.invalid" (click)="validateCode()" mat-button>Code
+                            [disabled]="uploaderGroup.invalid" (click)="validateCode(stepper)" mat-button>Code
                             überprüfen</button>
-                        <button *ngIf="uploaderGroup.valid && codeIsValid && codeChecked" mat-raised-button
-                            [hidden]="uploaderGroup.invalid" [disabled]="uploaderGroup.invalid" (click)="validateCode()"
-                            mat-button matStepperNext>Weiter</button>
                     </div>
                 </mat-step>
-                <mat-step>
-                    <ng-template matStepLabel>🎙 Inhalt</ng-template>
+                <mat-step [editable]="stepperConfig.podcast" >
+                    <ng-template matStepLabel>🦜 Inhalt</ng-template>
 
                     <mat-card-subtitle>
                         Gib hier an, wer mit wem gesabbelt und (hoffentlich) lecker gegessen hat. Alle Felder sind
@@ -79,29 +76,30 @@
                         </div>
                     </mat-card-content>
                     <div>
-                        <button  mat-button matStepperNext
-                            [disabled]="uploaderGroup.invalid">Weiter</button>
+                        <button mat-button matStepperNext [disabled]="uploaderGroup.invalid">Weiter</button>
                     </div>
                 </mat-step>
-                <mat-step>
-                    <ng-template matStepLabel>💾 Datei hochladen</ng-template>
+                <mat-step  [editable]="stepperConfig.upload">
+                    <ng-template matStepLabel>🎤 Datei hochladen</ng-template>
                     <div *ngIf="uploaderGroup.invalid">Auf einen der vorherigen Seiten fehlt noch was. Korrigier das
-                        bitte und komm hierher zurück</div>
+                        bitte und komm dann hierher zurück</div>
                     <div *ngIf="uploaderGroup.valid">
-                        <div>
-                            <mat-label>Mp3-Datei hochladen:</mat-label><br/>
-                            <input type="file" accept=".mp3" [required]=true #uploadedFile >
+                        <div *ngIf="!uploading">
+                            <mat-label>Episopde hochladen:</mat-label><br/>
+                            <input type="file" accept=".mp3" [required]=true #uploadFile  (change)="fileselected(uploadFile)"  >
                         </div>
                         <br/>
-                        <button mat-button color="warn" mat-raised-button (click)="startUpload()"  [disabled]="uploaderGroup.invalid">Upload starten</button>
-                        <div>
-                            
-                        </div>
+                       
+                        <button *ngIf="lastfile && !uploading" mat-button color="primary" #upButton mat-raised-button (click)="storeEpisode(stepper)"  [disabled]="uploaderGroup.invalid">Upload starten</button> 
+                        <mat-spinner *ngIf="uploading" style="margin-top:30px;"></mat-spinner>
                     </div>
                 </mat-step>
-                <mat-step>
+                <mat-step  [editable]="stepperConfig.goodbye">
                     <ng-template matStepLabel>☕ Tee trinken :)</ng-template>
-                    OINK
+                    <p>Super. Die Datei wurde hochgeladen und wird jetzt von kleinen speziell trainierten Eichhörnchen optimiert. Das kann durchaus ein bis zwei Stündchen dauern. 
+                        Du musst jetzt nix weiter tun und kannst den Browser schließen. <br/>
+                        Wenn Du unbedingt eine Seite zum [F5]-drücken brauchst, schau doch auf github(url)) nach. Da taucht Deine Episode dann auf.
+                        </p>
                 </mat-step>
             </mat-horizontal-stepper>
 

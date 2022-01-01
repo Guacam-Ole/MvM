@@ -17,6 +17,7 @@ import { MatTab, MatTabsModule } from '@angular/material/tabs';
 import{ MatIconModule }  from '@angular/material/icon';
 import {MatDividerModule } from '@angular/material/divider';
 import {HttpClientModule } from '@angular/common/http' ;
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -38,10 +39,8 @@ import {HttpClientModule } from '@angular/common/http' ;
     MatTabsModule,
     MatIconModule,
     MatDividerModule,
-    HttpClientModule
-
-
-  
+    HttpClientModule,
+    MatProgressSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
